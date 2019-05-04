@@ -1,12 +1,14 @@
 <template>
 	<ul class="list-unstyled mt-4">
-		<li v-for="task in tasks" 
-			:key="task.id" 
-			:class="{'is-done':task.isDone}"
-			@click="clickToChangetaskStatus(task)"
-		>
-			<b-card class="my-2" :title="task.title"></b-card>
-		</li>
+		<transition-group name="list" tag="p">
+			<li v-for="task in tasks" 
+				:key="task.id" 
+				:class="{'is-done':task.isDone}"
+				@click="clickToChangetaskStatus(task)"
+			>
+				<b-card class="my-2" :title="task.title"></b-card>
+			</li>
+		</transition-group>
 	</ul>
 </template>
 
@@ -21,3 +23,17 @@ export default {
 	}
 }
 </script>
+
+<style>
+	.list-item {
+		display: inline-block;
+		margin-right: 10px;
+	}
+	.list-enter-active, .list-leave-active {
+		transition: all 1s;
+	}
+	.list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
+		opacity: 0;
+		transform: translateY(130px);
+	}
+</style>
