@@ -1,28 +1,61 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>{{ msg }}</h1>
+
+	<CreateTaskForm 
+		@addNewTaskEvent="addNewTask"
+	></CreateTaskForm>
+
+	<ul>
+		<li v-for="task in tasks" 
+			:key="task.id" 
+			:class="{'is-done':task.isDone}"
+			@click="clickToChangetaskStatus(task)"
+		>
+			{{ task.title }}
+		</li>
+	</ul>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CreateTaskForm from './components/CreateTaskForm.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    CreateTaskForm
+  },
+  data(){
+	return{
+		msg:"Task list",
+		tasks: [
+			{id:1, title: "Get up", isDone: true},
+			{id:2, title: "Clean teeth", isDone: false},
+			{id:3, title: "Go out", isDone: false},
+		],
+	}
+  },
+  methods:{
+	addNewTask(task_title){
+		console.log(task_title);
+		this.tasks.push({
+				id:this.tasks.length +1, title:task_title, isDone: false
+			});
+		this.task_title = "";
+	},
+	clickToChangetaskStatus(task){
+		task.isDone = !task.isDone;
+	}
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+	h1{
+		color:brown;
+	}
+	.is-done{
+		text-decoration: line-through;
+	}
 </style>
