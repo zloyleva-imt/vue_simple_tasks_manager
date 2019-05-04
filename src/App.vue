@@ -1,15 +1,32 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+	  <b-container class="bv-example-row">
+		<b-row>
+			<b-col cols="12">
+				<h1>{{ msg }}</h1>
+			</b-col>
+			<b-col cols="12">
+				<CreateTaskForm 
+					@addNewTaskEvent="addNewTask"
+				></CreateTaskForm>
+			</b-col>
 
-	<CreateTaskForm 
-		@addNewTaskEvent="addNewTask"
-	></CreateTaskForm>
+			<b-col cols="12 mt-4">
+				<b-tabs content-class="mt-3">
+					<b-tab title="All" active @click="selectTab('all')"></b-tab>
+					<b-tab title="Done" @click="selectTab('done')"></b-tab>
+					<b-tab title="Not done" @click="selectTab('not-done')"></b-tab>
+				</b-tabs>
+			</b-col>
 
-	<TasksList 
-		:tasks="tasks"
-		@clickToChangetaskStatusEvent="clickToChangetaskStatus"
-	></TasksList>
+			<b-col cols="12">
+				<TasksList 
+					:tasks="filteredTasks"
+					@clickToChangetaskStatusEvent="clickToChangetaskStatus"
+				></TasksList>
+			</b-col>
+		</b-row>
+	</b-container>
   </div>
 </template>
 
@@ -30,6 +47,21 @@ export default {
 			{id:2, title: "Clean teeth", isDone: false},
 			{id:3, title: "Go out", isDone: false},
 		],
+		tab:"all",
+	}
+  },
+  computed:{
+	filteredTasks(){
+		return this.tasks.filter(el => {
+			switch (this.tab){
+				case 'done':
+					return el.isDone;
+				case 'not-done':
+					return !el.isDone;
+				default:
+					return true;
+			}
+		});
 	}
   },
   methods:{
@@ -42,6 +74,10 @@ export default {
 	},
 	clickToChangetaskStatus(task){
 		task.isDone = !task.isDone;
+	},
+	selectTab(tab){
+		console.log("selectTab", tab);
+		this.tab = tab;
 	}
   }
 }

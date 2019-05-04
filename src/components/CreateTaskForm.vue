@@ -1,8 +1,20 @@
 <template>
-	<form action="" @submit.prevent="addNewTask">
-		<input type="text" v-model="task_title">
-		<button>Add task</button>
-	</form>
+	<b-form @submit.prevent="addNewTask">
+		<b-form-group
+			id="input-group-1"
+			label="Task name:"
+			label-for="input-1"
+		>
+			<b-form-input
+			id="input-1"
+			v-model="task_title"
+			type="text"
+			required
+			placeholder="Enter new task"
+			></b-form-input>
+		</b-form-group>
+		<b-button type="submit" variant="primary">Add task</b-button>
+	</b-form>
 </template>
 
 <script>
