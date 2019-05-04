@@ -8,6 +8,9 @@
 			>
 				<b-card class="my-2" :title="task.title"></b-card>
 			</li>
+			<li v-if="showMsg" key="asdfgdfg">
+				<b-card class="my-2 bg-info text-white" title="No tasks yet..."></b-card>
+			</li>
 		</transition-group>
 	</ul>
 </template>
@@ -16,11 +19,16 @@
 export default {
 	name: 'TasksList',
 	props: ['tasks'],
+	computed:{
+		showMsg(){
+			return !this.tasks.length;
+		}
+	},
 	methods:{
 		clickToChangetaskStatus(task){
 			this.$emit("clickToChangetaskStatusEvent", task)
 		}
-	}
+	},
 }
 </script>
 

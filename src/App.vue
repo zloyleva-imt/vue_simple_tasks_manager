@@ -33,6 +33,7 @@
 <script>
 import CreateTaskForm from './components/CreateTaskForm.vue'
 import TasksList from './components/TasksList';
+import { setTimeout } from 'timers';
 
 export default {
   name: 'app',
@@ -42,13 +43,18 @@ export default {
   data(){
 	return{
 		msg:"Task list",
-		tasks: [
+		tasks: [],
+		tab:"all",
+	}
+  },
+  mounted(){
+	  setTimeout(() => {
+		this.tasks = [
 			{id:1, title: "Get up", isDone: true},
 			{id:2, title: "Clean teeth", isDone: false},
 			{id:3, title: "Go out", isDone: false},
-		],
-		tab:"all",
-	}
+		]
+	  }, 2000)
   },
   computed:{
 	filteredTasks(){
