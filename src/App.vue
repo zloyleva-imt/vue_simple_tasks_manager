@@ -6,25 +6,21 @@
 		@addNewTaskEvent="addNewTask"
 	></CreateTaskForm>
 
-	<ul>
-		<li v-for="task in tasks" 
-			:key="task.id" 
-			:class="{'is-done':task.isDone}"
-			@click="clickToChangetaskStatus(task)"
-		>
-			{{ task.title }}
-		</li>
-	</ul>
+	<TasksList 
+		:tasks="tasks"
+		@clickToChangetaskStatusEvent="clickToChangetaskStatus"
+	></TasksList>
   </div>
 </template>
 
 <script>
 import CreateTaskForm from './components/CreateTaskForm.vue'
+import TasksList from './components/TasksList';
 
 export default {
   name: 'app',
   components: {
-    CreateTaskForm
+    CreateTaskForm, TasksList
   },
   data(){
 	return{
